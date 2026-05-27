@@ -13,9 +13,10 @@ export class ReviewsService {
   constructor(private http: HttpClient) {}
 
   // ── Petición genérica (igual que en tu referencia) ──────────────
-  private post(objeto: any): Observable<any> {
-    return this.http.post(this.url, JSON.stringify(objeto));
-  }
+private post(objeto: any): Observable<any> {
+  const headers = { 'Content-Type': 'application/json' };
+  return this.http.post(this.url, JSON.stringify(objeto), { headers });
+}
 
   // ── USUARIOS ────────────────────────────────────────────────────
   login(email: string, password: string): Observable<any> {
