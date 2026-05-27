@@ -1,0 +1,88 @@
+<nav class="navbar">
+  <span class="logo">🎬 CineReviews</span>
+  <div class="nav-acciones">
+    <span class="bienvenida">Hola, {{ usuario?.nombre }}</span>
+    
+    <button class="btn-subir" (click)="irASubir()">+ Añadir</button>
+    
+    <button class="btn-logout" (click)="logout()">Salir</button>
+  </div>
+</nav>
+
+<div class="categorias">
+  <button [class.activo]="tipoSeleccionado === 'serie'"    (click)="seleccionarTipo('serie')">📺 Series</button>
+  <button [class.activo]="tipoSeleccionado === 'pelicula'" (click)="seleccionarTipo('pelicula')">🎥 Películas</button>
+</div>
+
+<div class="plataformas">
+  <button [class.activo]="plataformaSeleccionada === 0" (click)="filtrarPlataforma(0)">Todas</button>
+  <button
+    *ngFor="let p of plataformas"
+    [class.activo]="plataformaSeleccionada === p.id"
+    (click)="filtrarPlataforma(p.id)">
+    {{ p.nombre }}
+  </button>
+</div>
+
+<div class="grid" *ngIf="contenidos.length > 0; else sinResultados">
+  <div class="card" *ngFor="let c of contenidos" (click)="verDetalle(c.id)">
+    
+    <div class="card-img">
+      <img [src]="c.foto.startsWith('data:image') ? c.foto : 'assets/fotos/' + c.foto" 
+           [alt]="c.titulo" 
+           class="img-card" 
+           onerror="this.src='assets/fotos/default.jpg'">
+      <span class="badge">{{ c.plataforma_nombre }}</span>
+
+      <div class="card-admin-acciones" *ngIf="usuario?.email === 'admin@reviews.com'">
+        <button class="btn-card-edit" (click)="activarEdicion($event, c)" title="Editar">✏️</button>
+        <button class="btn-card-delete" (click)="borrarContenido($event, c)" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <h3>{{ c.titulo }}</h3>
+      <p class="anio">{{ c.anio }}</p>
+      <p class="desc">{{ c.descripcion | slice:0:80 }}...</p>
+
+      <div class="estrellas">
+        <span *ngFor="let e of estrellas(c.media_valoracion)"
+              [class.llena]="e <= c.media_valoracion">★</span>
+        <span class="media-texto" *ngIf="c.media_valoracion > 0">{{ c.media_valoracion }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #sinResultados>
+  <div class="sin-resultados">
+    No hay series o películas en esta sección todavía.
+  </div>
+</ng-template>
+
+<div class="modal-back" *ngIf="contenidoEditando" (click)="cancelarEdicion()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <h3>Modificar Contenido</h3>
+    
+    <div class="campo">
+      <label>Título</label>
+      <input type="text" [(ngModel)]="contenidoEditando.titulo" />
+    </div>
+
+    <div class="campo">
+      <label>Año</label>
+      <input type="number" [(ngModel)]="contenidoEditando.anio" />
+    </div>
+
+    <div class="campo">
+      <label>Descripción</label>
+      <textarea [(ngModel)]="contenidoEditando.descripcion" rows="4"></textarea>
+    </div>
+
+    <div class="modal-acciones">
+      <button class="btn-guardar" (click)="guardarCambios()">Guardar cambios</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>
+</div>

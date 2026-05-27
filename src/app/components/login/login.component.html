@@ -1,0 +1,46 @@
+<!-- src/app/components/login/login.component.html -->
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="logo">🎬 CineReviews</h1>
+    <p class="subtitle">Tu plataforma de valoraciones</p>
+
+    <!-- Tabs login / registro -->
+    <div class="tabs">
+      <button [class.active]="modo === 'login'"   (click)="cambiarModo('login')">Iniciar sesión</button>
+      <button [class.active]="modo === 'registro'" (click)="cambiarModo('registro')">Registrarse</button>
+    </div>
+
+    <!-- Formulario LOGIN -->
+    <div *ngIf="modo === 'login'">
+      <div class="campo">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" placeholder="tu@email.com" />
+      </div>
+      <div class="campo">
+        <label>Contraseña</label>
+        <input type="password" [(ngModel)]="password" placeholder="••••••" />
+      </div>
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <button class="btn-principal" (click)="iniciarSesion()">Entrar</button>
+    </div>
+
+    <!-- Formulario REGISTRO -->
+    <div *ngIf="modo === 'registro'">
+      <div class="campo">
+        <label>Nombre</label>
+        <input type="text" [(ngModel)]="nombre" placeholder="Tu nombre" />
+      </div>
+      <div class="campo">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" placeholder="tu@email.com" />
+      </div>
+      <div class="campo">
+        <label>Contraseña</label>
+        <input type="password" [(ngModel)]="password" placeholder="••••••" />
+      </div>
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <button class="btn-principal" (click)="registrarse()">Crear cuenta</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="subir-wrapper">
+  <div class="subir-card">
+    <button class="btn-back" (click)="volver()">← Volver</button>
+    <h2>Añadir contenido</h2>
+    <p class="sub">¿No encuentras tu peli o serie favorita? ¡Añádela tú!</p>
+
+    <div class="campo">
+      <label>Tipo *</label>
+      <div class="tipo-selector">
+        <button [class.activo]="tipo === 'pelicula'" (click)="tipo='pelicula'">🎥 Película</button>
+        <button [class.activo]="tipo === 'serie'"    (click)="tipo='serie'">📺 Serie</button>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Título *</label>
+      <input type="text" [(ngModel)]="titulo" placeholder="Ej: Breaking Bad" />
+    </div>
+
+    <div class="campo">
+      <label>Descripción *</label>
+      <textarea [(ngModel)]="descripcion" rows="3" placeholder="Breve sinopsis..."></textarea>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label>Plataforma *</label>
+        <select [(ngModel)]="id_plataforma">
+          <option value="">Selecciona...</option>
+          <option *ngFor="let p of plataformas" [value]="p.id">{{ p.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>Año</label>
+        <input type="number" [(ngModel)]="anio" placeholder="2024" min="1900" max="2099" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Carátula o Póster *</label>
+      <div class="upload-box">
+        <input type="file" id="file-upload" (change)="onFileSelected($event)" accept="image/*" />
+        <label for="file-upload" class="btn-upload-label">
+          📁 Seleccionar imagen desde tu dispositivo
+        </label>
+      </div>
+      
+      <div class="preview-container" *ngIf="fotoBase64">
+        <p>Vista previa:</p>
+        <img [src]="fotoBase64" alt="Vista previa de la carátula" class="img-preview" />
+      </div>
+    </div>
+
+    <p class="mensaje-ok" *ngIf="mensaje">{{ mensaje }}</p>
+    <p class="error"      *ngIf="error">{{ error }}</p>
+
+    <button class="btn-principal" (click)="enviar()">Publicar</button>
+  </div>
+</div>

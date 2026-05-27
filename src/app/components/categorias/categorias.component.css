@@ -1,0 +1,378 @@
+/* ==========================================================================
+   1. ESTILOS GENERALES Y FUENTE
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #121212;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   2. NAVBAR PRINCIPAL
+   ========================================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 15px 30px;
+  border-bottom: 1px solid #2a2a2a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e50914; /* Rojo estilo Netflix */
+  letter-spacing: 0.5px;
+}
+
+.navbar .nav-acciones {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar .bienvenida {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.navbar button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.navbar .btn-subir {
+  background-color: #238636; /* Verde sutil */
+  color: #ffffff;
+}
+
+.navbar .btn-subir:hover {
+  background-color: #2ea043;
+  transform: scale(1.03);
+}
+
+.navbar .btn-logout {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.navbar .btn-logout:hover {
+  background-color: #c82333;
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   3. BOTONES FILTROS (CATEGORÍAS Y PLATAFORMAS)
+   ========================================================================== */
+.categorias, .plataformas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.categorias button, .plataformas button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  background-color: #222;
+  color: #aaa;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categorias button:hover, .plataformas button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Estilo para el botón activo/seleccionado */
+.categorias button.activo {
+  background-color: #e50914;
+  color: #fff;
+  border-color: #e50914;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
+}
+
+.plataformas button.activo {
+  background-color: #ffffff;
+  color: #121212;
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   4. GRID Y TARJETAS DE PELÍCULAS/SERIES
+   ========================================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 25px;
+  padding: 20px 30px;
+}
+
+.card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Forzar misma altura de tarjetas */
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+}
+
+/* Contenedor fijo de la imagen */
+.card-img {
+  position: relative;
+  width: 100%;
+  height: 340px; /* Altura ideal fija */
+  background-color: #252525;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta la foto simétricamente sin deformarla */
+  display: block;
+}
+
+/* Badge de la plataforma encima de la foto */
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================================================
+   5. BOTONES DE ACCIONES ADMIN (EDITAR/BORRAR)
+   ========================================================================== */
+.card-admin-acciones {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  opacity: 0; /* Ocultos por defecto */
+  transition: opacity 0.2s ease-in-out;
+  z-index: 5;
+}
+
+/* Aparecen mágicamente cuando pasas el ratón sobre la tarjeta */
+.card:hover .card-admin-acciones {
+  opacity: 1;
+}
+
+.card-admin-acciones button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  transition: transform 0.1s;
+}
+
+.card-admin-acciones button:hover {
+  transform: scale(1.15);
+}
+
+.btn-card-edit {
+  background-color: #ffc107;
+}
+
+.btn-card-delete {
+  background-color: #dc3545;
+}
+
+/* ==========================================================================
+   6. TEXTOS DE LA TARJETA (BODY)
+   ========================================================================== */
+.card-body {
+  padding: 16px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-body h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Si el título no cabe, le pone '...' */
+}
+
+.card-body .anio {
+  color: #777;
+  font-size: 0.85rem;
+  margin: 0 0 10px 0;
+}
+
+.card-body .desc {
+  color: #bbb;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 15px 0;
+  flex-grow: 1;
+}
+
+/* Sección Estrellas pegadas abajo */
+.estrellas {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #444; /* Estrellas vacías gris oscuro */
+  font-size: 1rem;
+  margin-top: auto; 
+}
+
+.estrellas .llena {
+  color: #ffc107; /* Doradas */
+}
+
+.media-texto {
+  margin-left: 8px;
+  color: #ffc107;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   7. SECCIÓN SIN RESULTADOS Y MODAL MODIFICAR
+   ========================================================================== */
+.sin-resultados {
+  text-align: center;
+  color: #666;
+  padding: 50px;
+  font-size: 1.2rem;
+}
+
+/* Fondo oscuro translúcido del modal */
+.modal-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Caja del formulario */
+.modal-card {
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  color: white;
+}
+
+.modal-card h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.modal-card .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.modal-card label {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.modal-card input, .modal-card textarea {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  padding: 10px;
+  color: white;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.modal-card input:focus, .modal-card textarea:focus {
+  outline: none;
+  border-color: #e50914;
+}
+
+.modal-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.modal-acciones button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-guardar {
+  background-color: #e50914;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #b80710;
+}
+
+.btn-cancelar {
+  background-color: #444;
+  color: white;
+}
+
+.btn-cancelar:hover {
+  background-color: #555;
+}

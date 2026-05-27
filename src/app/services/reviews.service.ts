@@ -1,0 +1,70 @@
+// src/app/services/reviews.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ReviewsService {
+
+  private url = 'http://rubeeeeeeeeen.xo.je/reviews.php';  // Cambia si tu XAMPP usa otra ruta
+
+  constructor(private http: HttpClient) {}
+
+  // ── Petición genérica (igual que en tu referencia) ──────────────
+  private post(objeto: any): Observable<any> {
+    return this.http.post(this.url, JSON.stringify(objeto));
+  }
+
+  // ── USUARIOS ────────────────────────────────────────────────────
+  login(email: string, password: string): Observable<any> {
+    return this.post({ servicio: 'login', email, password });
+  }
+
+  registro(nombre: string, email: string, password: string): Observable<any> {
+    return this.post({ servicio: 'registro', nombre, email, password });
+  }
+
+  // ── PLATAFORMAS ─────────────────────────────────────────────────
+  getPlataformas(): Observable<any[]> {
+    return this.post({ servicio: 'plataformas' });
+  }
+
+  // ── CONTENIDOS ──────────────────────────────────────────────────
+  getContenidos(tipo: string, id_plataforma: number): Observable<any[]> {
+    return this.post({ servicio: 'contenidos', tipo, id_plataforma });
+  }
+
+  getContenidoID(id: number): Observable<any> {
+    return this.post({ servicio: 'selContenidoID', id });
+  }
+
+  anadeContenido(datos: any): Observable<any[]> {
+    return this.post({ servicio: 'anadeContenido', ...datos });
+  }
+
+  eliminaContenido(id: number, tipo: string, id_plataforma: number): Observable<any[]> {
+    return this.post({ servicio: 'eliminaContenido', id, tipo, id_plataforma });
+  }
+
+  modificaContenido(datos: any): Observable<any[]> {
+    return this.post({ servicio: 'modificaContenido', ...datos });
+  }
+
+  // ── OPINIONES ───────────────────────────────────────────────────
+  getOpiniones(id_contenido: number): Observable<any[]> {
+    return this.post({ servicio: 'opiniones', id_contenido });
+  }
+
+  anadeOpinion(datos: any): Observable<any[]> {
+    return this.post({ servicio: 'anadeOpinion', ...datos });
+  }
+
+  eliminaOpinion(id: number, id_contenido: number): Observable<any[]> {
+    return this.post({ servicio: 'eliminaOpinion', id, id_contenido });
+  }
+  modificaOpinion(datos: any): Observable<any[]> {
+    return this.post({ servicio: 'modificaOpinion', ...datos });
+  }
+}

@@ -1,0 +1,113 @@
+<div class="detalle-wrapper" *ngIf="contenido">
+
+  <div class="hero-container">
+    <div class="hero-blur-bg" [style.backgroundImage]="contenido.foto.startsWith('data:image') ? 'url(' + contenido.foto + ')' : 'url(assets/fotos/' + contenido.foto + ')'"></div>
+    
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <button class="btn-back" (click)="volver()">← Volver</button>
+      
+      <div class="flex-layout">
+        <div class="poster-column">
+          <img [src]="contenido.foto.startsWith('data:image') ? contenido.foto : 'assets/fotos/' + contenido.foto" 
+               [alt]="contenido.titulo" 
+               class="poster-img" 
+               onerror="this.src='assets/fotos/default.jpg'">
+        </div>
+
+        <div class="info-column hero-info">
+          <span class="tipo-badge">{{ contenido.tipo === 'serie' ? '📺 Serie' : '🎥 Película' }}</span>
+          <h1>{{ contenido.titulo }}</h1>
+          <p class="meta">{{ contenido.anio }} · {{ contenido.plataforma_nombre }}</p>
+          <p class="descripcion">{{ contenido.descripcion }}</p>
+
+          <div class="media-stars">
+            <span
+              *ngFor="let e of rangoEstrellas()"
+              [style.color]="colorEstrellaMedia(e, contenido.media_valoracion)">★</span>
+            <span class="media-texto">{{ contenido.media_valoracion }} / 5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="opiniones-section">
+    <h2>Opiniones ({{ opiniones.length }})</h2>
+
+    <div class="nueva-opinion">
+      <h3>Deja tu valoración</h3>
+
+      <div class="estrellas-selector">
+        <span
+          *ngFor="let e of rangoEstrellas()"
+          [style.color]="colorEstrella(e)"
+          (mouseenter)="setHover(e)"
+          (mouseleave)="quitarHover()"
+          (click)="seleccionarEstrella(e)">★</span>
+        <span class="hint" *ngIf="nuevaValoracion > 0">{{ nuevaValoracion }}/5</span>
+      </div>
+
+      <textarea
+        [(ngModel)]="nuevoComentario"
+        placeholder="Escribe tu opinión..."
+        rows="3"></textarea>
+
+      <button class="btn-enviar" (click)="enviarOpinion()">Publicar opinión</button>
+    </div>
+
+    <div class="opinion-card" *ngFor="let o of opiniones">
+      
+      <div *ngIf="idOpinionEditando === o.id; else modoLectura">
+        <div class="opinion-header">
+          <div class="avatar-nombre">
+            <div class="avatar">{{ o.nombre_usuario.charAt(0).toUpperCase() }}</div>
+            <strong>Modificando tu opinión</strong>
+          </div>
+          <div class="estrellas-selector">
+            <span *ngFor="let e of rangoEstrellas()"
+                  [style.color]="colorEstrellaEditor(e)"
+                  (mouseenter)="setEditHover(e)"
+                  (mouseleave)="quitarEditHover()"
+                  (click)="seleccionarEditEstrella(e)">★</span>
+          </div>
+        </div>
+        
+        <textarea [(ngModel)]="comentarioEditado" rows="3" class="edit-textarea"></textarea>
+        
+        <div class="edit-acciones">
+          <button class="btn-guardar" (click)="guardarOpinionEditada()">Guardar cambios</button>
+          <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </div>
+
+      <ng-template #modoLectura>
+        <div class="opinion-header">
+          <div class="avatar-nombre">
+            <div class="avatar">{{ o.nombre_usuario.charAt(0).toUpperCase() }}</div>
+            <strong>{{ o.nombre_usuario }}</strong>
+          </div>
+
+          <div class="opinion-meta">
+            <span *ngFor="let e of rangoEstrellas()"
+                  [style.color]="colorEstrellaMedia(e, o.valoracion)">★</span>
+            <span class="fecha">{{ o.fecha | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <p class="comentario">{{ o.comentario }}</p>
+
+        <div class="opinion-acciones" *ngIf="usuario?.id === o.id_usuario">
+          <button class="btn-editar" (click)="activarEdicion(o)">✏️ Editar</button>
+          <button class="btn-eliminar" (click)="eliminarOpinion(o)">🗑️ Eliminar</button>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <p class="sin-opiniones" *ngIf="opiniones.length === 0">
+      Aún no hay opiniones. ¡Sé el primero!
+    </p>
+  </div>
+</div>

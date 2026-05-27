@@ -1,0 +1,436 @@
+/* src/app/components/detalle/detalle.component.css */
+
+.detalle-wrapper {
+  background-color: #121212; /* Fondo ultra oscuro a juego con las categorías */
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 60px;
+}
+
+/* ==========================================================================
+   HERO BANNER (REESTRUCTURADO EN UN BLOQUE DE HASTA 1000PX)
+   ========================================================================== */
+.hero-container {
+  position: relative;
+  width: 100%;
+  min-height: 460px;
+  overflow: hidden;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* Fondo de ambiente difuminado para disimular imágenes pixeladas */
+.hero-blur-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  filter: blur(25px) brightness(0.35);
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+/* Degradados para integrar el fondo difuminado con el diseño oscuro */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #121212 10%, rgba(18, 18, 18, 0.75) 60%, #121212 100%),
+              linear-gradient(to top, #121212 0%, transparent 60%);
+  z-index: 2;
+}
+
+/* Contenedor superior - SVALOR CLAVE: FIJADO FIELMENTE A 1000PX */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Estructura flexible para acomodar póster y datos en paralelo */
+.flex-layout {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* Botón flotante para regresar */
+.btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover { 
+  background: #333;
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+/* ── COLUMNA IZQUIERDA: EL PÓSTER CUADRADO COMPACTO ── */
+.poster-column {
+  flex-shrink: 0;
+  width: 240px; /* Tamaño optimizado para que no se salga de su celda */
+}
+
+.poster-img {
+  width: 100%;
+  height: 330px; 
+  object-fit: cover; /* Recorta la imagen limpiamente evitando deformaciones */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: block;
+}
+
+/* ── COLUMNA DERECHA: TEXTOS DE INFORMACIÓN ── */
+.info-column {
+  flex-grow: 1;
+}
+
+.tipo-badge {
+  background: #e50914;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.hero-info h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.meta { 
+  color: #777; 
+  font-size: 15px; 
+  margin: 0 0 16px 0; 
+}
+
+.descripcion {
+  color: #bbb;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+.media-stars { 
+  display: flex; 
+  align-items: center; 
+  gap: 4px; 
+  font-size: 22px; 
+  color: #333;
+}
+
+.media-texto { 
+  color: #ffc107; 
+  font-size: 16px; 
+  margin-left: 10px; 
+  font-weight: bold; 
+}
+
+/* ==========================================================================
+   SECCIÓN OPINIONES (SINCRONIZADA A LOS MISMOS 1000PX EXACTOS)
+   ========================================================================== */
+.opiniones-section {
+  max-width: 1000px; /* Misma anchura del Hero para crear el bloque cuadrado uniforme */
+  margin: 0 auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.opiniones-section h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #2a2a2a;
+  padding-bottom: 12px;
+  color: #fff;
+}
+
+/* ==========================================================================
+   FORMULARIO NUEVA OPINIÓN (UNIFICADO EN GRIS OSCURO)
+   ========================================================================== */
+.nueva-opinion {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.nueva-opinion h3 {
+  margin: 0 0 16px 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.estrellas-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 26px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+.estrellas-selector span { 
+  transition: color 0.15s, transform 0.1s; 
+}
+
+.estrellas-selector span:hover {
+  transform: scale(1.15);
+}
+
+.hint { 
+  font-size: 14px; 
+  color: #ffc107; 
+  margin-left: 10px; 
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  background: #252525;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  padding: 12px;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+textarea:focus { 
+  border-color: #e50914;
+}
+
+.btn-enviar {
+  margin-top: 14px;
+  background: #e50914;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: block;
+  margin-left: auto;
+}
+
+.btn-enviar:hover { 
+  background: #b80710; 
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   TARJETAS DE COMENTARIOS PUBLICADOS
+   ========================================================================== */
+.opinion-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.opinion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.avatar-nombre {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e50914;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.avatar-nombre strong {
+  color: #fff;
+  font-size: 15px;
+}
+
+.opinion-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.fecha { 
+  color: #666; 
+  font-size: 12px; 
+  font-weight: 500;
+}
+
+.comentario { 
+  color: #bbb; 
+  font-size: 14px; 
+  line-height: 1.6; 
+  margin: 0; 
+  padding-left: 2px;
+}
+
+.sin-opiniones { 
+  text-align: center; 
+  color: #555; 
+  padding: 40px 0; 
+  font-size: 16px; 
+  font-style: italic;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIONES (EDITAR / BORRAR)
+   ========================================================================== */
+.opinion-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  border-top: 1px solid #2a2a2a;
+  padding-top: 12px;
+}
+
+.btn-editar {
+  background: transparent;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-editar:hover {
+  border-color: #ffc107;
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.05);
+}
+
+.btn-eliminar {
+  background: transparent;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar:hover { 
+  border-color: #e50914; 
+  color: #fff; 
+  background: #e50914; 
+}
+
+/* ── EDITOR DINÁMICO EN VIVO ── */
+.edit-textarea {
+  width: 100%;
+  background: #252525;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.edit-textarea:focus {
+  border-color: #e50914;
+  outline: none;
+}
+
+.edit-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-guardar {
+  background: #e50914;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-guardar:hover {
+  background: #b80710;
+}
+
+.btn-cancelar {
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-cancelar:hover {
+  border-color: #777;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}

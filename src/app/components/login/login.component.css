@@ -1,0 +1,108 @@
+/* src/app/components/login/login.component.css */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+}
+
+.login-card {
+  background: #1e1e2e;
+  border-radius: 16px;
+  padding: 40px;
+  width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.logo {
+  color: #e50914;
+  font-size: 28px;
+  margin: 0 0 4px 0;
+  text-align: center;
+}
+
+.subtitle {
+  color: #888;
+  text-align: center;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.tabs button.active {
+  background: #e50914;
+  color: #fff;
+  font-weight: bold;
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.campo input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.campo input:focus {
+  border-color: #e50914;
+}
+
+.btn-principal {
+  width: 100%;
+  padding: 12px;
+  background: #e50914;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.btn-principal:hover {
+  background: #c40812;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 13px;
+  margin: 8px 0;
+  text-align: center;
+}
