@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ReviewsService {
 
-  private url = 'https://rubeeeeeeeeen.xo.je/reviews.php';  // Cambia si tu XAMPP usa otra ruta
+  private url = 'http://rubeeeeeeeeen.xo.je/reviews.php';  // Cambia si tu XAMPP usa otra ruta
 
   constructor(private http: HttpClient) {}
 
