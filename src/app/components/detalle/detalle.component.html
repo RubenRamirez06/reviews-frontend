@@ -1,7 +1,7 @@
 <div class="detalle-wrapper" *ngIf="contenido">
 
   <div class="hero-container">
-    <div class="hero-blur-bg" [style.backgroundImage]="contenido.foto.startsWith('data:image') ? 'url(' + contenido.foto + ')' : 'url(assets/fotos/' + contenido.foto + ')'"></div>
+    <div class="hero-blur-bg" [style.backgroundImage]="'url(' + contenido.foto + ')'"></div>
     
     <div class="hero-overlay"></div>
 
@@ -10,7 +10,7 @@
       
       <div class="flex-layout">
         <div class="poster-column">
-          <img [src]="contenido.foto.startsWith('data:image') ? contenido.foto : 'assets/fotos/' + contenido.foto" 
+          <img [src]="contenido.foto" 
                [alt]="contenido.titulo" 
                class="poster-img" 
                onerror="this.src='assets/fotos/default.jpg'">
