@@ -66,38 +66,39 @@
     <h3>Modificar Contenido</h3>
     
     <div class="campo">
-      <label>Título</label>
+      <label>Título *</label>
       <input type="text" [(ngModel)]="contenidoEditando.titulo" />
     </div>
 
     <div class="campo">
-      <label>Año</label>
-      <input type="number" [(ngModel)]="contenidoEditando.anio" />
+      <label>Tipo *</label>
+      <select [(ngModel)]="contenidoEditando.tipo">
+        <option value="pelicula">Película</option>
+        <option value="serie">Serie</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Descripción *</label>
+      <textarea [(ngModel)]="contenidoEditando.descripcion" rows="4"></textarea>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <div class="campo" style="flex: 1;">
+        <label>Plataforma *</label>
+        <select [(ngModel)]="contenidoEditando.id_plataforma">
+          <option *ngFor="let p of plataformas" [value]="p.id">{{ p.nombre }}</option>
+        </select>
+      </div>
+      <div class="campo" style="flex: 1;">
+        <label>Año *</label>
+        <input type="number" [(ngModel)]="contenidoEditando.anio" />
+      </div>
     </div>
 
     <div class="campo">
       <label>Foto (URL o Base64)</label>
-      <input type="text" [(ngModel)]="contenidoEditando.foto" />
-    </div>
-
-    <div class="campo">
-      <label>Plataforma</label>
-      <select [(ngModel)]="contenidoEditando.id_plataforma">
-        <option *ngFor="let p of plataformas" [value]="p.id">{{ p.nombre }}</option>
-      </select>
-    </div>
-
-    <div class="campo">
-      <label>Tipo</label>
-      <select [(ngModel)]="contenidoEditando.tipo">
-        <option value="serie">Serie</option>
-        <option value="pelicula">Película</option>
-      </select>
-    </div>
-
-    <div class="campo">
-      <label>Descripción</label>
-      <textarea [(ngModel)]="contenidoEditando.descripcion" rows="4"></textarea>
+      <input type="text" [(ngModel)]="contenidoEditando.foto" placeholder="URL de la imagen" />
     </div>
 
     <div class="modal-acciones">
