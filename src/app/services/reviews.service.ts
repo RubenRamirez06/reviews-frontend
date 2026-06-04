@@ -1,6 +1,6 @@
 // src/app/services/reviews.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,15 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class ReviewsService {
 
-private url = 'https://reviews-backend-production-6ce6.up.railway.app/index.php'; // Cambia si tu XAMPP usa otra ruta
+  // URL de tu servidor en Railway
+  private url = 'https://reviews-backend-production-6ce6.up.railway.app/index.php';
 
   constructor(private http: HttpClient) {}
 
-  // ── Petición genérica (igual que en tu referencia) ──────────────
-private post(objeto: any): Observable<any> {
-  const headers = { 'Content-Type': 'application/json' };
-  return this.http.post(this.url, JSON.stringify(objeto), { headers });
-}
+  private post(objeto: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.url, JSON.stringify(objeto), { headers });
+  }
 
   // ── USUARIOS ────────────────────────────────────────────────────
   login(email: string, password: string): Observable<any> {
@@ -49,6 +49,7 @@ private post(objeto: any): Observable<any> {
     return this.post({ servicio: 'eliminaContenido', id, tipo, id_plataforma });
   }
 
+  // Esta función ahora enviará todos los campos que el PHP espera
   modificaContenido(datos: any): Observable<any[]> {
     return this.post({ servicio: 'modificaContenido', ...datos });
   }
@@ -65,6 +66,7 @@ private post(objeto: any): Observable<any> {
   eliminaOpinion(id: number, id_contenido: number): Observable<any[]> {
     return this.post({ servicio: 'eliminaOpinion', id, id_contenido });
   }
+
   modificaOpinion(datos: any): Observable<any[]> {
     return this.post({ servicio: 'modificaOpinion', ...datos });
   }
