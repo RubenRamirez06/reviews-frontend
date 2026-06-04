@@ -76,6 +76,26 @@
     </div>
 
     <div class="campo">
+      <label>Foto (URL o Base64)</label>
+      <input type="text" [(ngModel)]="contenidoEditando.foto" />
+    </div>
+
+    <div class="campo">
+      <label>Plataforma</label>
+      <select [(ngModel)]="contenidoEditando.id_plataforma">
+        <option *ngFor="let p of plataformas" [value]="p.id">{{ p.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Tipo</label>
+      <select [(ngModel)]="contenidoEditando.tipo">
+        <option value="serie">Serie</option>
+        <option value="pelicula">Película</option>
+      </select>
+    </div>
+
+    <div class="campo">
       <label>Descripción</label>
       <textarea [(ngModel)]="contenidoEditando.descripcion" rows="4"></textarea>
     </div>
@@ -85,4 +105,5 @@
       <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
     </div>
   </div>
+</div>
 </div>
