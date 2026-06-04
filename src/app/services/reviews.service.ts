@@ -11,6 +11,24 @@ export class ReviewsService {
   // URL de tu servidor en Railway
   private url = 'https://reviews-backend-production-6ce6.up.railway.app/index.php';
 
+  // Cloudinary
+  private cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dvhudhvoc/image/upload';
+  private uploadPreset = 'cinereviews';
+
+  async subirImagenCloudinary(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', this.uploadPreset);
+
+    const response = await fetch(this.cloudinaryUrl, {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+    return data.secure_url;
+  }
+
   constructor(private http: HttpClient) {}
 
   private post(objeto: any): Observable<any> {
