@@ -68,6 +68,18 @@ export class CategoriasComponent implements OnInit {
   verDetalle(id: number): void {
     this.router.navigate(['/detalle', id]);
   }
+  // Dentro de tu clase CategoriasComponent
+onFileSelected(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      // Ahora SÍ existe 'this.contenidoEditando' aquí
+      this.contenidoEditando.foto = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
 
   irASubir(): void {
     this.router.navigate(['/subir']);
