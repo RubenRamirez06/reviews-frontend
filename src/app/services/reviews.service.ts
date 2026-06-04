@@ -49,7 +49,6 @@ export class ReviewsService {
     return this.post({ servicio: 'eliminaContenido', id, tipo, id_plataforma });
   }
 
-  // Esta función ahora enviará todos los campos que el PHP espera
   modificaContenido(datos: any): Observable<any[]> {
     return this.post({ servicio: 'modificaContenido', ...datos });
   }
@@ -69,16 +68,5 @@ export class ReviewsService {
 
   modificaOpinion(datos: any): Observable<any[]> {
     return this.post({ servicio: 'modificaOpinion', ...datos });
-  }
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        // Esto convierte la imagen a Base64 para que tu PHP la pueda guardar
-        this.contenidoEditando.foto = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
   }
 }
