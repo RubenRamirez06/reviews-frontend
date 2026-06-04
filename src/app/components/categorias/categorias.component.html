@@ -97,8 +97,12 @@
     </div>
 
     <div class="campo">
-      <label>Foto (URL o Base64)</label>
-      <input type="text" [(ngModel)]="contenidoEditando.foto" placeholder="URL de la imagen" />
+      <label>Carátula o Póster</label>
+      <div class="drag-drop-zone" (click)="fileInput.click()">
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        <p *ngIf="!contenidoEditando.foto">Haz clic aquí para seleccionar imagen</p>
+        <img *ngIf="contenidoEditando.foto" [src]="contenidoEditando.foto" style="max-height: 100px; display: block; margin: 0 auto;">
+      </div>
     </div>
 
     <div class="modal-acciones">
