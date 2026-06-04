@@ -28,7 +28,7 @@
   <div class="card" *ngFor="let c of contenidos" (click)="verDetalle(c.id)">
     
     <div class="card-img">
-      <img [src]="c.foto.startsWith('data:image') ? c.foto : 'assets/fotos/' + c.foto" 
+      <img [src]="c.foto" 
            [alt]="c.titulo" 
            class="img-card" 
            onerror="this.src='assets/fotos/default.jpg'">
