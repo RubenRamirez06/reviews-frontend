@@ -24,6 +24,7 @@ export class CategoriasComponent implements OnInit {
 
   // Variable para el modal flotante de edición
   contenidoEditando: any = null;
+  fotoFile: File | null = null; // Archivo de imagen seleccionado
 
   constructor(
     private reviewsSvc: ReviewsService,
@@ -72,10 +73,10 @@ export class CategoriasComponent implements OnInit {
 onFileSelected(event: any): void {
   const file = event.target.files[0];
   if (file) {
+    this.fotoFile = file; // Guardamos el File para subirlo a Cloudinary
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      // Ahora SÍ existe 'this.contenidoEditando' aquí
-      this.contenidoEditando.foto = e.target.result;
+      this.contenidoEditando.foto = e.target.result; // Solo para preview
     };
     reader.readAsDataURL(file);
   }
@@ -117,13 +118,13 @@ onFileSelected(event: any): void {
   activarEdicion(event: Event, contenido: any): void {
     event.stopPropagation();
     
-    // 🌟 PROTECCIÓN TS: Si no es el admin, no abrimos el modal
     if (this.usuario?.email !== 'admin@reviews.com') {
       alert('No tienes permisos para editar contenido');
       return;
     }
     
     this.contenidoEditando = { ...contenido };
+    this.fotoFile = null; // Reseteamos el archivo al abrir el modal
   }
 
   cancelarEdicion(): void {
@@ -132,30 +133,39 @@ onFileSelected(event: any): void {
 
  // src/app/components/categorias/categorias.component.ts
 
-  guardarCambios(): void {
+  async guardarCambios(): Promise<void> {
     if (!this.contenidoEditando.titulo.trim() || !this.contenidoEditando.descripcion.trim()) {
       alert('Rellena los campos obligatorios');
       return;
     }
 
-    // Pasamos exactamente el tipo y la plataforma que el usuario tiene seleccionados en la pantalla
+    let fotoFinal = this.contenidoEditando.foto;
+
+    // Si hay imagen nueva, la subimos a Cloudinary y usamos la URL
+    if (this.fotoFile) {
+      try {
+        fotoFinal = await this.reviewsSvc.subirImagenCloudinary(this.fotoFile);
+      } catch (err) {
+        alert('Error al subir la imagen. Inténtalo de nuevo.');
+        return;
+      }
+    }
+
     const datosActualizar = {
       id: this.contenidoEditando.id,
       titulo: this.contenidoEditando.titulo,
       descripcion: this.contenidoEditando.descripcion,
       anio: this.contenidoEditando.anio,
-      foto: this.contenidoEditando.foto,
-      id_plataforma: this.contenidoEditando.id_plataforma, // La plataforma real de la serie en BD
-      
-      // MANDAMOS ESTOS DOS PARA QUE EL BACKEND SEPA RECARGAR LA VISTA CORRECTA:
+      foto: fotoFinal,
+      id_plataforma: this.contenidoEditando.id_plataforma,
       tipo: this.tipoSeleccionado, 
       filtro_plataforma: this.plataformaSeleccionada 
     };
 
     this.reviewsSvc.modificaContenido(datosActualizar).subscribe((data: any[]) => {
-      // Sincronizamos la lista con la respuesta del servidor respetando el filtro
       this.contenidos = data; 
-      this.contenidoEditando = null; // Cerramos el modal
+      this.contenidoEditando = null;
+      this.fotoFile = null;
     });
   }
 }
