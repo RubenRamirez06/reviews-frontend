@@ -49,6 +49,7 @@ export class ReviewsService {
     return this.post({ servicio: 'eliminaContenido', id, tipo, id_plataforma });
   }
 
+  // Esta función ahora enviará todos los campos que el PHP espera
   modificaContenido(datos: any): Observable<any[]> {
     return this.post({ servicio: 'modificaContenido', ...datos });
   }
